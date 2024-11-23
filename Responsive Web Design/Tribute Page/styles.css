@@ -1,0 +1,9 @@
+body {
+    background-color :#f5f6f7;
+    font-family: sans-serif;
+  }
+  
+  h1 {
+    display: flex;
+    justify-content: center;
+  }
