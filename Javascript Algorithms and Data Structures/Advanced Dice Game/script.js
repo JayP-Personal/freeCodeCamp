@@ -55,7 +55,7 @@ const outcomeScores = [
         rules: [(counts, faces, diceValuesArr) => counts.length === 5, (counts, faces, diceValuesArr) => findStraight(5,faces)],
         kept: false,
         index: 4,
-        scoreValue: (counts, faces, diceValuesArr)
+        scoreValue: (counts, faces, diceValuesArr) => 40
     },
     {      
         id: "none",
@@ -81,9 +81,14 @@ const toggleRulesDisplay = () => {
 rulesBtn.addEventListener("click", toggleRulesDisplay);
 
 const rollTheDice = () => {
+
+    keepScoreBtn.disabled = false;
+    keepScoreBtn.classList.remove('disabled');
     
     rolls++;
-    rollsElement.textContent = rolls
+    rollsElement.textContent = rolls;
+
+    rollDiceBtn.textContent = "Roll the dice";
     
     diceValuesArr = [];
     
@@ -93,35 +98,75 @@ const rollTheDice = () => {
             die.textContent = dieRoll
             diceValuesArr.push(dieRoll)
         }
-    )
+    );
+    
+    const nonSelectedInputScores = document.querySelectorAll('div[class="score-wrapper"] input');
 
-    // TESTS
-
-    // diceValuesArr = [2,5,4,3,2];
-
-    // END TESTS
-
-    clearScores();
+    clearScores(nonSelectedInputScores);
     calculateScores(diceValuesArr, outcomeScores);
 
-}
+    if (rolls === 3) {
+         rollDiceBtn.textContent = "End Round";
+        }
+        
+    }
 
-rollDiceBtn.addEventListener("click", () => {
+rollDiceBtn.addEventListener("click", (event) => {
     if (rolls >= 3) {
-        alert("You're out of rolls. Please select a score");
+        const confirmed = confirm("You're out of rolls. Continue without selecting a score?");
+        if (confirmed) {
+            progressRound();
+        } else {
+            return;
+        }
+        
     } else {
         rollTheDice()
     }
 });
 
+const gameOver = () => {
+    alert("game over!")
+}
+
+const progressRound = () => {
+    if (roundElement.textContent === "6") {
+        gameOver();
+        keepScoreBtn.disabled = true;
+        keepScoreBtn.classList.add('disabled');
+        rollDiceBtn.disabled = true;
+        rollDiceBtn.classList.add('disabled');
+        return;
+    }
+    roundElement.textContent = Number(roundElement.textContent) + 1;
+    rolls = 0
+}
+
 keepScoreBtn.addEventListener("click", () => {
     const selectedOutcome = document.querySelector('input[name="score-options"]:checked');
-    selectedOutcomeScoresIndex = outcomeScores.findIndex(outcome => outcome.id === selectedOutcome.id);
-    outcomeScores[selectedOutcomeScoresIndex].kept = true;
+    // lock the outcome
+    
+    if (selectedOutcome) {
 
-    const element = [...scoreInputs][selectedOutcomeScoresIndex];
+        selectedOutcomeScoresIndex = outcomeScores.findIndex(outcome => outcome.id === selectedOutcome.id);
+        outcomeScores[selectedOutcomeScoresIndex].kept = true;
 
-    totalScoreElement.textContent = Number(totalScoreElement.textContent) + element.value
+        // Grey out score
+        const selectedWrapper = selectedOutcome.closest('.score-wrapper');
+        selectedWrapper.classList.add('disabled');
+
+        selectedOutcome.disabled = true;
+        selectedOutcome.checked = false;
+        
+        keepScoreBtn.disabled = true;
+        keepScoreBtn.classList.add('disabled');
+
+        rollDiceBtn.textContent = "New Round: " + rollDiceBtn.textContent;
+
+        totalScoreElement.textContent = Number(totalScoreElement.textContent) + Number(selectedOutcome.value);
+    }
+
+    progressRound(); 
 
 })
 
@@ -155,8 +200,6 @@ const calculateScores = (diceValuesArr, outcomeScores) => {
     counts = Object.values(dieFaceCount);
     faces = Object.keys(dieFaceCount);
 
-    console.log(Object.entries(outcomeScores));
-
     [...outcomeScores].forEach(
         (outcome) => {
             if (!outcome.kept && outcome.rules.every(rule => rule(counts, faces, diceValuesArr))) {
@@ -166,16 +209,16 @@ const calculateScores = (diceValuesArr, outcomeScores) => {
     )
 }
 
-const clearScores = () => {
-    [...scoreInputs].forEach(
+const clearScores = (nonSelectedInputScores) => {
+    [...nonSelectedInputScores].forEach(
         (element) => {
-                element.setAttribute("disabled", true);
-                element.value = 0
+            element.setAttribute("disabled", true);
+            element.value = 0
+            const nearestSpan = element.closest('.score-wrapper').querySelector('span');
+            if (nearestSpan) {
+                nearestSpan.textContent = "";
             }
-    );
-
-    [...scoreSpans].forEach(
-        element => element.textContent = ""
+            }
     );
 }
 
