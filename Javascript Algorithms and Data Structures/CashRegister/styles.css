@@ -43,7 +43,7 @@ main {
   border-radius: 10px;
 }
 
-#change-due {
+#change-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -53,7 +53,7 @@ main {
   margin: 0 auto; /* Center the entire container */
 }
 
-#change-due > * {
+#change-container > * {
   flex: 0 1 calc(33.333% - 1rem); /* Allows up to 3 columns */
   max-width: 200px; /* Max width of 200px */
   width: 100%; /* Ensure it can shrink */
@@ -74,4 +74,9 @@ main {
 .quantity {
   font-size: 0.8em;
   margin: 5px 0;
+}
+
+
+#change-due {
+  display: inline-block; 
 }
