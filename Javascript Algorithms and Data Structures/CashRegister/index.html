@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cash Register</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Cash Register</h1>
+  </header>
+
+  <main>
+    <div class="price-container">
+      <span id="price">Price: </span>
+    </div>
+
+    <div class="cash-container">
+      <label for="cash">Tender: </label>
+      <input type="number" id="cash">
+    </div>
+    
+    <div class="purchase-container">
+      <button type="button" id="purchase-btn">Purchase</button>
+    </div>
+
+    
+    <div id="change-due">
+      <div class="currency-unit" id="penny" data-amount="0.01">
+        $0.01
+        <p class="quantity">In Register: <span id="penny-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="penny-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="nickel" data-amount="0.05">
+        $0.05
+        <p class="quantity">In Register: <span id="nickel-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="nickel-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="dime" data-amount="0.1">
+        $0.10
+        <p class="quantity">In Register: <span id="dime-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="dime-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="quarter" data-amount="0.25">
+        $0.25
+        <p class="quantity">In Register: <span id="quarter-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="quarter-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="one-dollar" data-amount="1">
+        $1.00
+        <p class="quantity">In Register: <span id="one-dollar-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="one-dollar-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="five-dollars" data-amount="5">
+        $5.00
+        <p class="quantity">In Register: <span id="five-dollar-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="five-dollar-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="ten-dollars" data-amount="10">
+        $10.00
+        <p class="quantity">In Register: <span id="ten-dollar-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="ten-dollar-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="twenty-dollars" data-amount="20">
+        $20.00
+        <p class="quantity">In Register: <span id="twenty-dollar-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="twenty-dollar-change-quantity">0</span></p>
+      </div>
+      <div class="currency-unit" id="one-hundred-dollars" data-amount="100">
+        $100.00
+        <p class="quantity">Quantity in Register: <span id="hundred-dollar-register-quantity">0</span></p>
+        <p class="quantity">Due for Change: <span id="hundred-dollar-change-quantity">0</span></p>
+      </div>
+    </div>
+
+  </main>
+  <script src="./script.js"></script>
+</body>
+
+</html>
